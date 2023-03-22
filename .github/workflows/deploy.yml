@@ -16,7 +16,7 @@ jobs:
         run: echo ${{ secrets.REGISTRY_PWORD }} | docker login ${{ secrets.SERVER }} -u ${{ secrets.REGISTRY_UNAME }} --password-stdin
 
       - name: Build container
-        run: docker build -t ${{ secrets.IMAGE }} .
+        run: docker build -t ${{ secrets.ROBOTTEST_IMAGE }} .
 
       - name: Deploy container
         run: docker push ${{ secrets.IMAGE }}
