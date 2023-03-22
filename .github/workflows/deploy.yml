@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login private container registry
+        run: echo ${{ secrets.REGISTRY_PWORD }} | docker login ${{ secrets.SERVER }} -u ${{ secrets.REGISTRY_UNAME }} --password-stdin
+
+      - name: Build container
+        run: docker build -t ${{ secrets.IMAGE }} .
+
+      - name: Deploy container
+        run: docker push ${{ secrets.IMAGE }}
